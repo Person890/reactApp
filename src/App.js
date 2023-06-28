@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 
-const API_KEY = "NBw5cJNm0pSZ8KFEfnH2GxjeK5eSruro7Qz7OGEj";
+const API_KEY = process.env.REACT_APP_API_KEY || "DEMO_KEY";
 
 function App() {
   const [image, setImage] = useState([]);
