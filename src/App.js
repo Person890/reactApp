@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 
-const API_KEY = process.env.REACT_APP_API_KEY || "DEMO_KEY";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function App() {
   const [image, setImage] = useState([]);
@@ -30,7 +30,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&count=4`)
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&count=10`)
       .then((res) => res.json())
       .then((json) => {
         setImage(json);
@@ -51,7 +51,13 @@ function App() {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center', color: 'MidnightBlue', fontSize: '10em' }}>
+      <h1 style={{
+        textAlign: "center",
+        color: "MidnightBlue",
+        fontSize: "10em",
+        marginBottom: "1em"
+      }}
+      >
         NASA picture of the day (count: {userInput})
       </h1>
       <form
@@ -71,51 +77,68 @@ function App() {
             type="text"
             pattern="[0-9]*"
             value={userInput}
-            placeholder="# of images"
-            style={{
-              padding: '10px',
-              fontSize: '1em',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-              outline: 'none',
-            }}
+            placeholder={"# of images"}
             onChange={handleChange}
+            style={{
+              padding: "0.5em",
+              marginRight: "0.5em",
+              borderRadius: "0.3em",
+              border: "1px solid MidnightBlue",
+            }}
           />
         </label>
         <input
           type="submit"
           value="Submit"
           style={{
-            padding: '10px 20px',
-            fontSize: '1em',
-            border: 'none',
-            borderRadius: '5px',
-            backgroundColor: 'MidnightBlue',
-            color: 'white',
-            cursor: 'pointer',
+            padding: "0.5em 1em",
+            backgroundColor: "MidnightBlue",
+            color: "white",
+            border: "none",
+            borderRadius: "0.7em",
+            cursor: "pointer",
           }}
         />
       </form>
-
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
         {images.map((item) => (
-          <div key={item.date} style={{ margin: '10px', textAlign: 'center', width: '20%' }}>
-            <h2 style={{ color: 'MidnightBlue', fontSize: '2.5em' }}>
+          <div
+            key={item.date}
+            style={{
+              margin: "10px",
+              textAlign: "center",
+              width: "20%",
+              backgroundColor: "LightBlue",
+              borderRadius: "1em",
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.3)",
+              padding: "1em",
+            }}
+          >
+            <h2 style={{ color: "MidnightBlue", fontSize: "2.5em" }}>
               {item.title}
             </h2>
-            {item.media_type === 'image' ? (
-              <img src={item.url} alt={item.title} style={{ width: '100%', minWidth: '100px' }} />
+            {item.media_type === "image" ? (
+              <img
+                src={item.url}
+                alt={item.title}
+                style={{ width: "100%", borderRadius: "0.3em" }}
+              />
             ) : (
               <iframe
+                src={item.url}
                 title={item.title}
                 width="100%"
-                height="auto"
-                src={item.url}
-                frameBorder="0"
-                allowFullScreen
-              />
+                height="300"
+                style={{ borderRadius: "0.3em" }}
+              ></iframe>
             )}
-            <p style={{ color: 'MidnightBlue', fontSize: '1.5em' }}>
+            <p style={{ color: "MidnightBlue", fontSize: "1.5em" }}>
               {item.explanation}
             </p>
           </div>
